@@ -187,12 +187,16 @@ function ProductsPage() {
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden bg-[var(--navy)] py-16 text-white">
+      <section className="relative overflow-hidden bg-[var(--navy)] pb-0 pt-14 text-white">
         <div className="grid-bg absolute inset-0 opacity-20" />
-        {/* glow */}
+        {/* glows */}
         <div
-          className="absolute -right-20 top-1/2 -translate-y-1/2 h-64 w-64 rounded-full bg-[var(--electric)]/12 pointer-events-none"
-          style={{ filter: "blur(70px)" }}
+          className="absolute -right-20 top-0 h-80 w-80 rounded-full bg-[var(--electric)]/10 pointer-events-none"
+          style={{ filter: "blur(90px)" }}
+        />
+        <div
+          className="absolute left-1/3 bottom-0 h-48 w-48 rounded-full bg-[var(--electric)]/8 pointer-events-none"
+          style={{ filter: "blur(60px)" }}
         />
         {/* bottom line */}
         <div className="absolute bottom-0 left-0 right-0 h-px overflow-hidden">
@@ -210,7 +214,7 @@ function ProductsPage() {
         <div className="relative mx-auto max-w-[1280px] px-6">
           {/* breadcrumb */}
           <nav
-            className="text-xs uppercase tracking-wider text-white/50 mb-4"
+            className="text-xs uppercase tracking-wider text-white/50 mb-5"
             style={{ opacity: heroReady ? 1 : 0, transition: "opacity 0.5s ease 0.1s" }}
           >
             <Link to="/" className="hover:text-white transition-colors">
@@ -220,7 +224,8 @@ function ProductsPage() {
             <span className="text-white/75">Products</span>
           </nav>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          {/* top row — title + search */}
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between mb-10">
             <div
               style={{
                 opacity: heroReady ? 1 : 0,
@@ -229,14 +234,20 @@ function ProductsPage() {
               }}
             >
               <p className="label-eyebrow !text-[var(--electric)] mb-2">ENTES Elektronik Catalog</p>
-              <h1 className="font-display text-5xl font-bold uppercase bolt-left">
+              <h1 className="font-display text-5xl font-bold uppercase bolt-left leading-none">
                 {active === "all" ? "Our Products" : activeCategory?.name}
               </h1>
+              <p className="mt-3 pl-4 text-sm text-white/50 max-w-md">
+                {active === "all"
+                  ? `${products.length} references across 6 categories — energy metering, protection, power quality and more.`
+                  : activeCategory?.description}
+              </p>
             </div>
-            {/* search bar */}
+
+            {/* search */}
             <div
               style={{ opacity: heroReady ? 1 : 0, transition: "opacity 0.6s ease 0.3s" }}
-              className="relative w-full sm:w-72"
+              className="relative w-full sm:w-72 shrink-0 mt-1"
             >
               <Search
                 size={15}
@@ -247,7 +258,7 @@ function ProductsPage() {
                 placeholder="Search products…"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full rounded-md border border-white/15 bg-white/8 py-2.5 pl-9 pr-4 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-[var(--electric)]/60 focus:bg-white/12 transition-all duration-200 backdrop-blur-sm"
+                className="w-full rounded-md border border-white/15 bg-white/8 py-2.5 pl-9 pr-9 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-[var(--electric)]/60 focus:bg-white/12 transition-all duration-200 backdrop-blur-sm"
               />
               {query && (
                 <button
@@ -258,6 +269,43 @@ function ProductsPage() {
                 </button>
               )}
             </div>
+          </div>
+
+          {/* category pills row — pinned to bottom of hero */}
+          <div
+            className="flex gap-2 overflow-x-auto pb-px scrollbar-none -mx-6 px-6"
+            style={{ opacity: heroReady ? 1 : 0, transition: "opacity 0.6s ease 0.45s" }}
+          >
+            {[
+              { id: "all" as const, name: "All Products", count: products.length },
+              ...categories.map((c) => ({ ...c, count: products.filter((p) => p.category === c.id).length })),
+            ].map((c) => {
+              const isActive = active === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setActive(c.id as Filter)}
+                  className="shrink-0 flex items-center gap-2 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide transition-all duration-200 border-b-2 whitespace-nowrap"
+                  style={{
+                    borderColor: isActive ? "var(--electric)" : "transparent",
+                    color: isActive ? "#fff" : "rgba(255,255,255,0.45)",
+                    background: isActive ? "rgba(212,43,43,0.12)" : "transparent",
+                  }}
+                >
+                  {c.name}
+                  <span
+                    className="rounded px-1.5 py-0.5 text-[10px]"
+                    style={{
+                      background: isActive ? "rgba(212,43,43,0.25)" : "rgba(255,255,255,0.08)",
+                      color: isActive ? "#fff" : "rgba(255,255,255,0.35)",
+                    }}
+                  >
+                    {c.count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -280,57 +328,7 @@ function ProductsPage() {
             </button>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
-            {/* ── SIDEBAR ── */}
-            <aside className={`${sidebarOpen ? "block" : "hidden"} lg:block self-start`}>
-              <FadeUp>
-                <div className="rounded-lg border border-[var(--line)] bg-white p-6 sticky top-24">
-                  <h2 className="label-eyebrow !text-[var(--navy)] mb-4">Filter by Category</h2>
-                  <ul className="space-y-1">
-                    {(
-                      [
-                        { id: "all" as const, name: "All Products", count: products.length },
-                        ...categories.map((c) => ({ ...c, count: products.filter((p) => p.category === c.id).length })),
-                      ] as const
-                    ).map((c) => {
-                      const isActive = active === c.id;
-                      return (
-                        <li key={c.id}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setActive(c.id as Filter);
-                              setSidebarOpen(false);
-                            }}
-                            className={`flex w-full items-center gap-2.5 rounded-md px-3 py-2.5 text-left text-sm transition-all duration-200 ${isActive ? "bg-[var(--navy)] text-white shadow-sm" : "text-[var(--ink)] hover:bg-[var(--offwhite)] hover:text-[var(--navy)]"}`}
-                          >
-                            <span
-                              className={`h-3 w-[3px] rounded-full flex-shrink-0 transition-colors duration-200 ${isActive ? "bg-[var(--electric)]" : "bg-[var(--line)]"}`}
-                            />
-                            <span className="flex-1 font-medium">{c.name}</span>
-                            <span
-                              className={`text-xs rounded px-1.5 py-0.5 font-medium transition-colors ${isActive ? "bg-white/15 text-white/80" : "bg-[var(--offwhite)] text-[var(--ink)]/50"}`}
-                            >
-                              {c.count}
-                            </span>
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-
-                  {active !== "all" && (
-                    <button
-                      onClick={() => setActive("all")}
-                      className="mt-4 flex items-center gap-1.5 text-xs text-[var(--electric)] hover:underline underline-offset-2 font-medium"
-                    >
-                      <X size={12} /> Clear filter
-                    </button>
-                  )}
-                </div>
-              </FadeUp>
-            </aside>
-
+          <div className="grid gap-8">
             {/* ── GRID ── */}
             <div>
               {/* count + active filter badge */}
