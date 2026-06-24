@@ -44,7 +44,6 @@ export function Footer() {
                 <li key={c.id}>
                   <Link
                     to="/products"
-                    search={{ category: c.id }}
                     className="text-white/80 hover:text-white"
                   >
                     {c.name}
