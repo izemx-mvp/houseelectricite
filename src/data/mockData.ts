@@ -7,6 +7,21 @@ import {
   ShieldCheck,
   CircleDot,
 } from "lucide-react";
+import catPowerQuality from "@/assets/category-power-quality.jpg";
+import catMeasurement from "@/assets/category-measurement.jpg";
+import catPowerFactor from "@/assets/category-power-factor.jpg";
+import catEnergyMgmt from "@/assets/category-energy-management.jpg";
+import catProtection from "@/assets/category-protection.jpg";
+import catCT from "@/assets/category-current-transformers.jpg";
+import solEnergy from "@/assets/solution-energy-management.jpg";
+import solPF from "@/assets/solution-power-factor.jpg";
+import solProtection from "@/assets/solution-protection.jpg";
+import imgPanelMeter from "@/assets/product-panel-meter.jpg";
+import imgEnergyMeter from "@/assets/product-energy-meter.jpg";
+import imgPFController from "@/assets/product-pf-controller.jpg";
+import imgMonitoringRelay from "@/assets/product-monitoring-relay.jpg";
+import imgPhaseRelay from "@/assets/product-phase-relay.jpg";
+import imgTimer from "@/assets/product-timer.jpg";
 
 export type CategoryId =
   | "power-quality"
@@ -21,6 +36,7 @@ export interface Category {
   name: string;
   description: string;
   icon: LucideIcon;
+  image: string;
 }
 
 export const categories: Category[] = [
@@ -29,36 +45,42 @@ export const categories: Category[] = [
     name: "Power Quality & Energy",
     description: "Analyzers and meters for harmonic, voltage, and quality monitoring.",
     icon: Activity,
+    image: catPowerQuality,
   },
   {
     id: "measurement",
     name: "Electrical Measurement",
     description: "Precision metering, current and voltage measurement devices.",
     icon: Gauge,
+    image: catMeasurement,
   },
   {
     id: "power-factor",
     name: "Power Factor Correction",
     description: "Reactive power controllers and capacitor switching systems.",
     icon: Zap,
+    image: catPowerFactor,
   },
   {
     id: "energy-management",
     name: "Energy Management",
     description: "Hardware and software platforms for site-wide consumption tracking.",
     icon: LineChart,
+    image: catEnergyMgmt,
   },
   {
     id: "protection",
     name: "Protection & Control",
     description: "Phase, voltage and timing relays for industrial safety.",
     icon: ShieldCheck,
+    image: catProtection,
   },
   {
     id: "current-transformers",
     name: "Current Transformers",
     description: "Toroidal and split-core CTs for accurate current sensing.",
     icon: CircleDot,
+    image: catCT,
   },
 ];
 
@@ -69,6 +91,28 @@ export interface Product {
   highlight: string;
   description: string;
   specs: { label: string; value: string }[];
+}
+
+const productImageMap: Record<string, string> = {
+  "epm-04": imgPanelMeter,
+  "epm-06": imgPanelMeter,
+  "es3-63ls": imgEnergyMeter,
+  "es3-80ls": imgEnergyMeter,
+  "rgp-9": imgPFController,
+  "rgp-12": imgPFController,
+  "emk-01": imgMonitoringRelay,
+  "akc-01a": imgMonitoringRelay,
+  "akc-01d": imgMonitoringRelay,
+  "gkrc-03": imgPhaseRelay,
+  "gkrc-03f": imgPhaseRelay,
+  "mcb-25": imgTimer,
+  "mcb-7": imgTimer,
+  "mcb-8": imgTimer,
+  "mcb-9": imgTimer,
+};
+
+export function getProductImage(slug: string): string {
+  return productImageMap[slug] ?? imgPanelMeter;
 }
 
 export const products: Product[] = [
@@ -310,6 +354,7 @@ export const solutions = [
     id: "energy-management",
     title: "Energy Management Solutions",
     icon: LineChart,
+    image: solEnergy,
     paragraphs: [
       "Track electrical consumption in real time across every feeder, panel and tenant. Our energy management hardware integrates with software platforms via Modbus and Ethernet for centralized reporting.",
       "Identify waste, allocate costs accurately, and produce ISO 50001-ready data. The same hardware scales from a single substation to multi-site portfolios.",
@@ -326,6 +371,7 @@ export const solutions = [
     id: "power-factor",
     title: "Power Factor Correction Solutions",
     icon: Zap,
+    image: solPF,
     paragraphs: [
       "Reduce reactive energy penalties and free up transformer capacity with automatic capacitor banks driven by ENTES RGP controllers.",
       "Our solutions target a power factor above 0.95, protect capacitors against harmonics and over-voltage, and report stage health for predictive maintenance.",
@@ -342,6 +388,7 @@ export const solutions = [
     id: "protection",
     title: "Protection & Control Solutions",
     icon: ShieldCheck,
+    image: solProtection,
     paragraphs: [
       "Safeguard motors, panels and process equipment with phase, voltage and current protection relays. Configurable thresholds and time delays match site requirements.",
       "Combined with multi-function timers, our protection range covers everything from simple star-delta starting to phase-failure shutdown of critical loads.",
