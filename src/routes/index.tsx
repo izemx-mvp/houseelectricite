@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Zap, CheckCircle2, Download, FileText } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { categories, solutions, CATALOG_URL } from "@/data/mockData";
+import heroBg from "@/assets/hero-bg.jpg";
+import whyImg from "@/assets/about.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,7 +30,15 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-[var(--navy)] text-white">
-        <div className="grid-bg absolute inset-0 opacity-50" />
+        <img
+          src={heroBg}
+          alt=""
+          width={1920}
+          height={1088}
+          className="absolute inset-0 h-full w-full object-cover opacity-35"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--navy)] via-[var(--navy)]/85 to-[var(--navy)]/40" />
+        <div className="grid-bg absolute inset-0 opacity-30" />
         <div className="absolute inset-y-0 right-[-10%] w-[55%] bg-gradient-to-bl from-[var(--electric)]/20 via-transparent to-transparent blur-3xl" />
         <div className="relative mx-auto max-w-[1280px] px-6 py-24 sm:py-32">
           <p className="label-eyebrow !text-[var(--electric)]">Official ENTES Distributor · Morocco</p>
@@ -98,19 +108,31 @@ function HomePage() {
                 <Link
                   key={c.id}
                   to="/products"
-                  className="group relative flex flex-col gap-4 overflow-hidden rounded-lg border border-[var(--line)] bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(26,36,86,0.12)]"
+                  className="group relative flex flex-col overflow-hidden rounded-lg border border-[var(--line)] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(26,36,86,0.12)]"
                 >
-                  <span className="absolute left-0 top-0 h-full w-[3px] bg-[var(--electric)] opacity-0 transition-opacity group-hover:opacity-100" />
-                  <div className="flex h-12 w-12 items-center justify-center rounded-md bg-[var(--navy)] text-white">
-                    <Icon size={22} />
+                  <span className="absolute left-0 top-0 z-10 h-full w-[3px] bg-[var(--electric)] opacity-0 transition-opacity group-hover:opacity-100" />
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={c.image}
+                      alt={c.name}
+                      loading="lazy"
+                      width={1024}
+                      height={768}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-md bg-[var(--navy)] text-white shadow-lg">
+                      <Icon size={20} />
+                    </div>
                   </div>
-                  <h3 className="font-display text-xl font-bold uppercase text-[var(--navy)]">
-                    {c.name}
-                  </h3>
-                  <p className="text-sm text-[var(--ink)]/75">{c.description}</p>
-                  <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--electric)]">
-                    View products <ArrowRight size={16} />
-                  </span>
+                  <div className="flex flex-1 flex-col gap-3 p-6">
+                    <h3 className="font-display text-xl font-bold uppercase text-[var(--navy)]">
+                      {c.name}
+                    </h3>
+                    <p className="text-sm text-[var(--ink)]/75">{c.description}</p>
+                    <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--electric)]">
+                      View products <ArrowRight size={16} />
+                    </span>
+                  </div>
                 </Link>
               );
             })}
@@ -156,21 +178,34 @@ function HomePage() {
       <section className="bg-[var(--offwhite)]">
         <div className="mx-auto max-w-[1280px] px-6 py-20">
           <SectionHeading eyebrow="Trust" title="Why House Électricité?" />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            {[
-              "Official ENTES Moroccan distributor",
-              "Technical expertise & after-sales support",
-              "Full product catalog available",
-              "Custom quotes for large projects",
-            ].map((point) => (
-              <div
-                key={point}
-                className="flex items-start gap-4 rounded-lg border border-[var(--line)] bg-white p-6"
-              >
-                <CheckCircle2 className="mt-0.5 shrink-0 text-[var(--electric)]" size={22} />
-                <p className="font-medium text-[var(--navy)]">{point}</p>
-              </div>
-            ))}
+          <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+            <div className="relative overflow-hidden rounded-lg border border-[var(--line)]">
+              <img
+                src={whyImg}
+                alt="House Électricité distribution warehouse in Casablanca"
+                loading="lazy"
+                width={1600}
+                height={1024}
+                className="h-full w-full object-cover"
+              />
+              <span className="absolute left-0 top-0 h-full w-[3px] bg-[var(--electric)]" />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                "Official ENTES Moroccan distributor",
+                "Technical expertise & after-sales support",
+                "Full product catalog available",
+                "Custom quotes for large projects",
+              ].map((point) => (
+                <div
+                  key={point}
+                  className="flex items-start gap-3 rounded-lg border border-[var(--line)] bg-white p-5"
+                >
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-[var(--electric)]" size={20} />
+                  <p className="text-sm font-medium text-[var(--navy)]">{point}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

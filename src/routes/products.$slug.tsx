@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight, ArrowLeft, Download, FileText } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
-import { getProductBySlug, getCategory, products } from "@/data/mockData";
+import { getProductBySlug, getCategory, getProductImage, products } from "@/data/mockData";
 
 export const Route = createFileRoute("/products/$slug")({
   loader: ({ params }) => {
@@ -43,7 +43,7 @@ function ProductDetail() {
   const { product } = Route.useLoaderData();
   const category = getCategory(product.category);
   const related = products.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 3);
-  const initials = product.name.replace(/[^A-Z0-9]/gi, "").slice(0, 4).toUpperCase();
+  const image = getProductImage(product.slug);
 
   return (
     <>
@@ -61,11 +61,15 @@ function ProductDetail() {
       <section className="bg-white">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
-            <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--offwhite)]">
-              <span className="absolute left-0 top-0 h-full w-[3px] bg-[var(--electric)]" />
-              <span className="font-display text-8xl font-bold tracking-tight text-[var(--navy)]/25">
-                {initials}
-              </span>
+            <div className="relative aspect-square overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--offwhite)]">
+              <span className="absolute left-0 top-0 z-10 h-full w-[3px] bg-[var(--electric)]" />
+              <img
+                src={image}
+                alt={`${product.name} — ${category?.name ?? ""}`}
+                width={1024}
+                height={768}
+                className="h-full w-full object-cover"
+              />
             </div>
 
             <div>

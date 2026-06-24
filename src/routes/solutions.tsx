@@ -53,7 +53,18 @@ function SolutionsPage() {
             className={dark ? "bg-[var(--offwhite)]" : "bg-white"}
           >
             <div className="mx-auto max-w-[1280px] px-6 py-20">
-              <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+              <div className={`grid gap-12 lg:grid-cols-2 lg:items-center ${idx % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+                <div className="relative overflow-hidden rounded-lg border border-[var(--line)] shadow-[0_8px_24px_rgba(26,36,86,0.08)]">
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    loading="lazy"
+                    width={1280}
+                    height={896}
+                    className="h-full w-full object-cover"
+                  />
+                  <span className="absolute left-0 top-0 h-full w-[3px] bg-[var(--electric)]" />
+                </div>
                 <div>
                   <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-[var(--navy)] text-white">
                     <Icon size={26} />
@@ -61,6 +72,11 @@ function SolutionsPage() {
                   <h2 className="mt-5 font-display text-4xl font-bold uppercase text-[var(--navy)] bolt-left">
                     {s.title}
                   </h2>
+                  <div className="mt-6 space-y-4 text-[var(--ink)]/85 leading-relaxed">
+                    {s.paragraphs.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
                   <ul className="mt-6 space-y-3">
                     {s.benefits.map((b) => (
                       <li key={b} className="flex items-start gap-3 text-sm text-[var(--ink)]/85">
@@ -69,11 +85,6 @@ function SolutionsPage() {
                       </li>
                     ))}
                   </ul>
-                </div>
-                <div className="space-y-4 text-[var(--ink)]/85 leading-relaxed">
-                  {s.paragraphs.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
                 </div>
               </div>
 
