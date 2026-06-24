@@ -270,55 +270,21 @@ function ProductsPage() {
             </div>
           </div>
 
-          {/* category grid */}
+          {/* stats row */}
           <div
-            className="grid grid-cols-3 sm:grid-cols-6 gap-px border border-white/8 rounded-lg overflow-hidden mt-8"
+            className="mt-10 grid grid-cols-3 gap-px border-t border-white/10 pt-8 pb-6"
             style={{ opacity: heroReady ? 1 : 0, transition: "opacity 0.6s ease 0.45s" }}
           >
-            {categories.map((c, i) => {
-              const Icon = c.icon;
-              const isActive = active === c.id;
-              const count = products.filter((p) => p.category === c.id).length;
-              return (
-                <button
-                  key={c.id}
-                  type="button"
-                  onClick={() => setActive(c.id as Filter)}
-                  className="flex flex-col items-center gap-2 py-5 px-3 text-center transition-all duration-200 relative group/cat"
-                  style={{
-                    background: isActive ? "rgba(212,43,43,0.15)" : "rgba(255,255,255,0.03)",
-                  }}
-                >
-                  {/* active indicator top */}
-                  <span
-                    className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-200"
-                    style={{ background: isActive ? "var(--electric)" : "transparent" }}
-                  />
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200"
-                    style={{ background: isActive ? "var(--electric)" : "rgba(255,255,255,0.08)" }}
-                  >
-                    <Icon
-                      size={17}
-                      className="transition-colors duration-200"
-                      style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.5)" }}
-                    />
-                  </div>
-                  <span
-                    className="text-[10px] font-semibold uppercase tracking-wide leading-tight transition-colors duration-200"
-                    style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.45)" }}
-                  >
-                    {c.name}
-                  </span>
-                  <span
-                    className="text-[10px] font-medium"
-                    style={{ color: isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.25)" }}
-                  >
-                    {count} ref.
-                  </span>
-                </button>
-              );
-            })}
+            {[
+              { n: `${filtered.length}`, label: active === "all" ? "Total references" : "References in category" },
+              { n: "6", label: "Product categories" },
+              { n: "ENTES", label: "Certified equipment" },
+            ].map((s) => (
+              <div key={s.label} className="flex flex-col gap-1 pr-6">
+                <span className="font-display text-3xl font-bold uppercase text-white">{s.n}</span>
+                <span className="text-xs uppercase tracking-wider text-white/40">{s.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -341,7 +307,56 @@ function ProductsPage() {
             </button>
           </div>
 
-          <div className="grid gap-8">
+          <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
+            {/* ── SIDEBAR ── */}
+            <aside className={`${sidebarOpen ? "block" : "hidden"} lg:block self-start`}>
+              <FadeUp>
+                <div className="rounded-lg border border-[var(--line)] bg-white p-6 sticky top-24">
+                  <h2 className="label-eyebrow !text-[var(--navy)] mb-4">Filter by Category</h2>
+                  <ul className="space-y-1">
+                    {(
+                      [
+                        { id: "all" as const, name: "All Products", count: products.length },
+                        ...categories.map((c) => ({ ...c, count: products.filter((p) => p.category === c.id).length })),
+                      ] as const
+                    ).map((c) => {
+                      const isActive = active === c.id;
+                      return (
+                        <li key={c.id}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setActive(c.id as Filter);
+                              setSidebarOpen(false);
+                            }}
+                            className={`flex w-full items-center gap-2.5 rounded-md px-3 py-2.5 text-left text-sm transition-all duration-200 ${isActive ? "bg-[var(--navy)] text-white shadow-sm" : "text-[var(--ink)] hover:bg-[var(--offwhite)] hover:text-[var(--navy)]"}`}
+                          >
+                            <span
+                              className={`h-3 w-[3px] rounded-full flex-shrink-0 transition-colors duration-200 ${isActive ? "bg-[var(--electric)]" : "bg-[var(--line)]"}`}
+                            />
+                            <span className="flex-1 font-medium">{c.name}</span>
+                            <span
+                              className={`text-xs rounded px-1.5 py-0.5 font-medium transition-colors ${isActive ? "bg-white/15 text-white/80" : "bg-[var(--offwhite)] text-[var(--ink)]/50"}`}
+                            >
+                              {c.count}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  {active !== "all" && (
+                    <button
+                      onClick={() => setActive("all")}
+                      className="mt-4 flex items-center gap-1.5 text-xs text-[var(--electric)] hover:underline underline-offset-2 font-medium"
+                    >
+                      <X size={12} /> Clear filter
+                    </button>
+                  )}
+                </div>
+              </FadeUp>
+            </aside>
+
             {/* ── GRID ── */}
             <div>
               {/* count + active filter badge */}
