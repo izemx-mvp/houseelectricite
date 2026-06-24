@@ -186,7 +186,6 @@ function ProductsPage() {
 
   return (
     <>
-      {/* ── HERO ── */}
       <section className="relative overflow-hidden bg-[var(--navy)] pb-0 pt-14 text-white">
         <div className="grid-bg absolute inset-0 opacity-20" />
         {/* glows */}
@@ -271,37 +270,51 @@ function ProductsPage() {
             </div>
           </div>
 
-          {/* category pills row — pinned to bottom of hero */}
+          {/* category grid */}
           <div
-            className="flex gap-2 overflow-x-auto pb-px scrollbar-none -mx-6 px-6"
+            className="grid grid-cols-3 sm:grid-cols-6 gap-px border border-white/8 rounded-lg overflow-hidden mt-8"
             style={{ opacity: heroReady ? 1 : 0, transition: "opacity 0.6s ease 0.45s" }}
           >
-            {[
-              { id: "all" as const, name: "All Products", count: products.length },
-              ...categories.map((c) => ({ ...c, count: products.filter((p) => p.category === c.id).length })),
-            ].map((c) => {
+            {categories.map((c, i) => {
+              const Icon = c.icon;
               const isActive = active === c.id;
+              const count = products.filter((p) => p.category === c.id).length;
               return (
                 <button
                   key={c.id}
                   type="button"
                   onClick={() => setActive(c.id as Filter)}
-                  className="shrink-0 flex items-center gap-2 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide transition-all duration-200 border-b-2 whitespace-nowrap"
+                  className="flex flex-col items-center gap-2 py-5 px-3 text-center transition-all duration-200 relative group/cat"
                   style={{
-                    borderColor: isActive ? "var(--electric)" : "transparent",
-                    color: isActive ? "#fff" : "rgba(255,255,255,0.45)",
-                    background: isActive ? "rgba(212,43,43,0.12)" : "transparent",
+                    background: isActive ? "rgba(212,43,43,0.15)" : "rgba(255,255,255,0.03)",
                   }}
                 >
-                  {c.name}
+                  {/* active indicator top */}
                   <span
-                    className="rounded px-1.5 py-0.5 text-[10px]"
-                    style={{
-                      background: isActive ? "rgba(212,43,43,0.25)" : "rgba(255,255,255,0.08)",
-                      color: isActive ? "#fff" : "rgba(255,255,255,0.35)",
-                    }}
+                    className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-200"
+                    style={{ background: isActive ? "var(--electric)" : "transparent" }}
+                  />
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-md transition-all duration-200"
+                    style={{ background: isActive ? "var(--electric)" : "rgba(255,255,255,0.08)" }}
                   >
-                    {c.count}
+                    <Icon
+                      size={17}
+                      className="transition-colors duration-200"
+                      style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.5)" }}
+                    />
+                  </div>
+                  <span
+                    className="text-[10px] font-semibold uppercase tracking-wide leading-tight transition-colors duration-200"
+                    style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.45)" }}
+                  >
+                    {c.name}
+                  </span>
+                  <span
+                    className="text-[10px] font-medium"
+                    style={{ color: isActive ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.25)" }}
+                  >
+                    {count} ref.
                   </span>
                 </button>
               );
