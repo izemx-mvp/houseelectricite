@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Building2, Handshake, Wrench, ExternalLink } from "lucide-react";
+import aboutImg from "@/assets/about.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -32,7 +33,18 @@ function AboutPage() {
 
       <section className="bg-white">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
-          <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="relative overflow-hidden rounded-lg border border-[var(--line)] shadow-[0_8px_24px_rgba(26,36,86,0.08)]">
+              <img
+                src={aboutImg}
+                alt="House Électricité team in the Casablanca distribution warehouse"
+                loading="lazy"
+                width={1600}
+                height={1024}
+                className="h-full w-full object-cover"
+              />
+              <span className="absolute left-0 top-0 h-full w-[3px] bg-[var(--electric)]" />
+            </div>
             <div className="space-y-5 text-base leading-relaxed text-[var(--ink)]/85">
               <p>
                 House Électricité S.A.R.L. is a Casablanca-based company specialized in the
@@ -47,19 +59,19 @@ function AboutPage() {
                 firms across Morocco — from large manufacturing plants to commercial real estate
                 portfolios.
               </p>
-            </div>
-            <div className="rounded-lg border border-[var(--line)] bg-[var(--offwhite)] p-8">
-              <h3 className="label-eyebrow !text-[var(--navy)]">At a glance</h3>
-              <dl className="mt-4 grid grid-cols-2 gap-y-4 text-sm">
-                <dt className="text-[var(--ink)]/70">Headquarters</dt>
-                <dd className="font-semibold text-[var(--navy)]">Casablanca, Morocco</dd>
-                <dt className="text-[var(--ink)]/70">Founded</dt>
-                <dd className="font-semibold text-[var(--navy)]">15+ years ago</dd>
-                <dt className="text-[var(--ink)]/70">Partnership</dt>
-                <dd className="font-semibold text-[var(--navy)]">ENTES Elektronik</dd>
-                <dt className="text-[var(--ink)]/70">Products</dt>
-                <dd className="font-semibold text-[var(--navy)]">500+ references</dd>
-              </dl>
+              <div className="rounded-lg border border-[var(--line)] bg-[var(--offwhite)] p-6">
+                <h3 className="label-eyebrow !text-[var(--navy)]">At a glance</h3>
+                <dl className="mt-4 grid grid-cols-2 gap-y-4 text-sm">
+                  <dt className="text-[var(--ink)]/70">Headquarters</dt>
+                  <dd className="font-semibold text-[var(--navy)]">Casablanca, Morocco</dd>
+                  <dt className="text-[var(--ink)]/70">Founded</dt>
+                  <dd className="font-semibold text-[var(--navy)]">15+ years ago</dd>
+                  <dt className="text-[var(--ink)]/70">Partnership</dt>
+                  <dd className="font-semibold text-[var(--navy)]">ENTES Elektronik</dd>
+                  <dt className="text-[var(--ink)]/70">Products</dt>
+                  <dd className="font-semibold text-[var(--navy)]">500+ references</dd>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
