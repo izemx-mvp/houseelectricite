@@ -81,7 +81,7 @@ function ProductDetail() {
               <div className="mt-3 overflow-hidden rounded-lg border border-[var(--line)]">
                 <table className="w-full text-sm">
                   <tbody>
-                    {product.specs.map((s, i) => (
+                    {product.specs.map((s: { label: string; value: string }, i: number) => (
                       <tr key={s.label} className={i % 2 ? "bg-[var(--offwhite)]" : "bg-white"}>
                         <td className="w-1/2 px-4 py-3 font-medium text-[var(--navy)]">{s.label}</td>
                         <td className="px-4 py-3 text-[var(--ink)]/85">{s.value}</td>
