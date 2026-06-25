@@ -160,7 +160,7 @@ export function Footer() {
 
         {/* bottom bar */}
         <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:items-center">
-          <p>© 2025 House Électricité S.A.R.L. All rights reserved.</p>
+          <p>© 2026 House Électricité S.A.R.L. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <p>Official ENTES Elektronik distributor — Morocco</p>
             <span className="h-1 w-1 rounded-full bg-white/20" />
