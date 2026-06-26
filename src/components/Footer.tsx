@@ -39,7 +39,7 @@ export function Footer() {
           {/* brand */}
           <div className="lg:col-span-1">
             <div className="inline-flex rounded-md bg-white px-3 py-2 mb-4">
-              <img src={logoAsset.url} alt="House Électricité" className="h-10 w-auto" />
+              <img src={logoUrl} alt="House Électricité" className="h-10 w-auto" />
             </div>
             <p className="text-sm text-white/60 leading-relaxed mb-5">
               More than a supplier, we are the solution. Official ENTES Elektronik distributor in Morocco since our
