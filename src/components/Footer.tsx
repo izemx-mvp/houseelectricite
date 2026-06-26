@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { MapPin, Phone, Mail, ArrowRight, ExternalLink } from "lucide-react";
-import logoAsset from "@/assets/HouseLogo.png.asset.json";
+import logoUrl from "@/assets/HouseLogo.png";
 import { categories } from "@/data/mockData";
 
 const quickLinks = [

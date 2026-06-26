@@ -49,7 +49,7 @@ export function Navbar() {
           onClick={() => setMegaOpen(false)}
         >
           <img
-            src={logoAsset.url}
+            src={logoUrl}
             alt="House Électricité"
             className="transition-all duration-300"
             style={{ height: scrolled ? "38px" : "44px", width: "auto" }}
