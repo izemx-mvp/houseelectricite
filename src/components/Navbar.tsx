@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
-import logoAsset from "@/assets/HouseLogo.png.asset.json";
+import logoUrl from "@/assets/HouseLogo.png";
 import { categories } from "@/data/mockData";
 
 const links = [
