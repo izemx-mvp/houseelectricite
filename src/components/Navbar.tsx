@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
-import logoAsset from "@/assets/HouseLogo.png.asset.json";
+import logoUrl from "@/assets/HouseLogo.png";
 import { categories } from "@/data/mockData";
 
 const links = [
@@ -49,7 +49,7 @@ export function Navbar() {
           onClick={() => setMegaOpen(false)}
         >
           <img
-            src={logoAsset.url}
+            src={logoUrl}
             alt="House Électricité"
             className="transition-all duration-300"
             style={{ height: scrolled ? "38px" : "44px", width: "auto" }}
